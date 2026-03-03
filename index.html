@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bagelhole Horoscopes | Planes Month</title>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <header class="top">
+    <div class="brand">
+      <div class="logoMark" aria-hidden="true">✶</div>
+      <div class="brandText">
+        <div class="kicker">CONFIDENTIAL(ISH) SKY MEMO</div>
+        <h1 class="title">Bagelhole Horoscopes</h1>
+        <p class="sub">Planes month edition. Astrology but make it aviation. ✈️🔮</p>
+      </div>
+    </div>
+
+    <div class="meta">
+      <div class="pill" id="periodPill">Period: …</div>
+      <div class="pill" id="countPill">Names: …</div>
+      <button class="btn" id="shuffleBtn" type="button" title="Shuffle names">Shuffle roster</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="panel chartPanel">
+      <div class="panelHead">
+        <h2 class="panelTitle">Sky Chart</h2>
+        <div class="panelHint">Click a call-sign to “ping” it on the radar wheel.</div>
+      </div>
+
+      <div class="chartWrap">
+        <canvas id="skyChart" width="900" height="900" aria-label="Astro aviation chart"></canvas>
+
+        <div class="chartLegend" aria-live="polite">
+          <div class="legendRow">
+            <span class="dot d1"></span><span>Runways (12 sectors)</span>
+          </div>
+          <div class="legendRow">
+            <span class="dot d2"></span><span>Orbit rings</span>
+          </div>
+          <div class="legendRow">
+            <span class="dot d3"></span><span>Friend call-signs (from JSON)</span>
+          </div>
+
+          <div class="legendCard" id="hoverCard">
+            <div class="legendTitle">Hover a call-sign</div>
+            <div class="legendBody">to see its sector + link.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel notePanel">
+      <div class="panelHead">
+        <h2 class="panelTitle">Note from the Auditor</h2>
+        <div class="panelHint">Pulled directly from JSON. Update whenever the auditor “finds things.”</div>
+      </div>
+
+      <div class="note" id="auditorNote">
+        Loading…
+      </div>
+
+      <div class="tools">
+        <label class="search">
+          <span class="searchLabel">Search names</span>
+          <input id="searchInput" type="text" placeholder="Type a name…" autocomplete="off" />
+        </label>
+
+        <div class="toggles">
+          <label class="toggle">
+            <input type="checkbox" id="sortToggle" />
+            <span>Sort A→Z</span>
+          </label>
+
+          <label class="toggle">
+            <input type="checkbox" id="showSectorsToggle" checked />
+            <span>Show sectors</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="rosterHead">
+        <h3 class="rosterTitle">Roster</h3>
+        <div class="rosterSub" id="rosterSub">…</div>
+      </div>
+
+      <ul class="roster" id="rosterList" aria-label="Names roster"></ul>
+
+      <footer class="foot">
+        <div class="footLeft">Add names in <code>data/roster.json</code>.</div>
+        <div class="footRight">Each name links to its own folder index.</div>
+      </footer>
+    </section>
+  </main>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
