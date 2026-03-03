@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Bagelhole Horoscopes | Planes Month</title>
+  <title>ATC Horoscope Console</title>
+  <meta name="description" content="Air traffic control styled horoscope roster + sky chart." />
 
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -11,89 +12,127 @@
 <body>
   <header class="top">
     <div class="brand">
-      <div class="logoMark" aria-hidden="true">✶</div>
+      <div class="logoMark" aria-hidden="true">
+        <span class="mark1">ATC</span>
+        <span class="mark2">SKY</span>
+      </div>
+
       <div class="brandText">
-        <div class="kicker">CONFIDENTIAL(ISH) SKY MEMO</div>
-        <h1 class="title">Bagelhole Horoscopes</h1>
-        <p class="sub">Planes month edition. Astrology but make it aviation. ✈️🔮</p>
+        <div class="kicker">AIR TRAFFIC CONTROL • ASTRO OPS</div>
+        <h1 class="title">HOROSCOPE TRACK CONSOLE</h1>
+        <p class="sub">
+          Planes month. Track tags are friends, not star signs.
+          <span class="blink">◉</span>
+        </p>
       </div>
     </div>
 
     <div class="meta">
       <div class="pill" id="periodPill">Period: …</div>
-      <div class="pill" id="countPill">Names: …</div>
-      <button class="btn" id="shuffleBtn" type="button" title="Shuffle names">Shuffle roster</button>
+      <div class="pill" id="countPill">Tracks: …</div>
+
+      <button class="btn" id="shuffleBtn" type="button" title="Rebuild starfield + routes">
+        Rebuild Airspace
+      </button>
     </div>
   </header>
 
   <main class="wrap">
+    <!-- Radar / scope -->
     <section class="panel chartPanel">
       <div class="panelHead">
-        <h2 class="panelTitle">Sky Chart</h2>
-        <div class="panelHint">Click a call-sign to “ping” it on the radar wheel.</div>
+        <div>
+          <h2 class="panelTitle">SCOPE</h2>
+          <div class="panelHint">
+            Hover a track to highlight its star-route. Click a strip to ping.
+          </div>
+        </div>
+
+        <div class="panelRight">
+          <label class="toggle">
+            <input type="checkbox" id="showSectorsToggle" checked />
+            <span>Show rings</span>
+          </label>
+        </div>
       </div>
 
       <div class="chartWrap">
-        <canvas id="skyChart" width="900" height="900" aria-label="Astro aviation chart"></canvas>
+        <div class="scopeFrame">
+          <div class="scopeHeader">
+            <div class="scopeLeft">
+              <span class="chip chipGreen">PRIMARY</span>
+              <span class="chip chipAmber">SIM</span>
+              <span class="chip chipBlue">STAR-ROUTE</span>
+            </div>
+            <div class="scopeRight">
+              <span class="readout">MODE: ATC-ASTRO</span>
+              <span class="readout">SWEEP: LIVE</span>
+            </div>
+          </div>
 
-        <div class="chartLegend" aria-live="polite">
-          <div class="legendRow">
-            <span class="dot d1"></span><span>Runways (12 sectors)</span>
-          </div>
-          <div class="legendRow">
-            <span class="dot d2"></span><span>Orbit rings</span>
-          </div>
-          <div class="legendRow">
-            <span class="dot d3"></span><span>Friend call-signs (from JSON)</span>
-          </div>
+          <canvas id="skyChart" width="900" height="900" aria-label="Scope"></canvas>
 
-          <div class="legendCard" id="hoverCard">
-            <div class="legendTitle">Hover a call-sign</div>
-            <div class="legendBody">to see its sector + link.</div>
+          <div class="scopeFooter">
+            <span class="readout">GRID: ON</span>
+            <span class="readout">TAGS: AUTO</span>
+            <span class="readout">FILTER: FRIENDS</span>
           </div>
         </div>
+
+        <aside class="chartLegend" aria-live="polite">
+          <div class="legendBlock">
+            <div class="legendTitle">LEGEND</div>
+            <div class="legendRow"><span class="dot d1"></span><span>Stars</span></div>
+            <div class="legendRow"><span class="dot d2"></span><span>Star-route</span></div>
+            <div class="legendRow"><span class="dot d3"></span><span>Track blip</span></div>
+          </div>
+
+          <div class="legendBlock" id="hoverCard">
+            <div class="legendTitle">TRACK TAG</div>
+            <div class="legendBody">Hover a blip to see its tag data.</div>
+          </div>
+
+          <div class="legendBlock">
+            <div class="legendTitle">NOTES</div>
+            <div class="legendBody">
+              No plane-to-plane linking. Each track flies a route between stars.
+            </div>
+          </div>
+        </aside>
       </div>
     </section>
 
+    <!-- Auditor note + roster -->
     <section class="panel notePanel">
       <div class="panelHead">
-        <h2 class="panelTitle">Note from the Auditor</h2>
-        <div class="panelHint">Pulled directly from JSON. Update whenever the auditor “finds things.”</div>
-      </div>
-
-      <div class="note" id="auditorNote">
-        Loading…
-      </div>
-
-      <div class="tools">
-        <label class="search">
-          <span class="searchLabel">Search names</span>
-          <input id="searchInput" type="text" placeholder="Type a name…" autocomplete="off" />
-        </label>
-
-        <div class="toggles">
-          <label class="toggle">
-            <input type="checkbox" id="sortToggle" />
-            <span>Sort A→Z</span>
-          </label>
-
-          <label class="toggle">
-            <input type="checkbox" id="showSectorsToggle" checked />
-            <span>Show sectors</span>
-          </label>
+        <div>
+          <h2 class="panelTitle">AUDITOR MSG</h2>
+          <div class="panelHint">System note pulled from JSON.</div>
+        </div>
+        <div class="panelRight">
+          <span class="status">SYS OK</span>
         </div>
       </div>
 
+      <div class="note" id="auditorNote">Loading…</div>
+
+      <div class="tools">
+        <label class="search">
+          <span class="searchLabel">Track search</span>
+          <input id="searchInput" type="text" placeholder="Type a name…" autocomplete="off" />
+        </label>
+      </div>
+
       <div class="rosterHead">
-        <h3 class="rosterTitle">Roster</h3>
+        <h3 class="rosterTitle">TRACK STRIPS</h3>
         <div class="rosterSub" id="rosterSub">…</div>
       </div>
 
-      <ul class="roster" id="rosterList" aria-label="Names roster"></ul>
+      <ul class="roster" id="rosterList" aria-label="Roster"></ul>
 
       <footer class="foot">
-        <div class="footLeft">Add names in <code>data/roster.json</code>.</div>
-        <div class="footRight">Each name links to its own folder index.</div>
+        <div class="footLeft">Edit <code>data/roster.json</code> to add more tracks.</div>
+        <div class="footRight">Links resolve to <code>people/&lt;slug&gt;/index.html</code></div>
       </footer>
     </section>
   </main>
